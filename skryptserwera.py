@@ -11,18 +11,27 @@ def start_server(server_ip, server_port):
         print(f"Połączono z {addr}")
 
         while True:
-            command = input(">> ")
-            if command.lower() == "exit":
-                conn.send(b"exit")
-                break
+            try:
+                # Wprowadzenie komendy
+                command = input(">> ")
+                if command.lower() == "exit":
+                    conn.send(b"exit")
+                    break
 
-            conn.send(command.encode("utf-8"))
-            response = conn.recv(1024).decode("utf-8")
-            print(response)
+                # Wysłanie komendy
+                conn.send(command.encode("utf-8"))
+
+                # Odbieranie odpowiedzi
+                response = conn.recv(4096).decode("utf-8")
+                print(response)
+            except Exception as e:
+                print(f"Błąd w trakcie komunikacji: {e}")
+                break
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Ogólny błąd serwera: {e}")
     finally:
         sock.close()
+        print("Serwer został zamknięty.")
 
-# Zmień IP i port na odpowiednie
+# Zmień adres ip i port na odpowiednie
 start_server("0.0.0.0", 4444)
